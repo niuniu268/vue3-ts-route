@@ -11,9 +11,7 @@ export function login(data:loginData){
         url:"/login",
         method:"get",
         data
-
     }
-
     )
 
 
