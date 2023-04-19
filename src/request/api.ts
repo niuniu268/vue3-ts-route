@@ -1,3 +1,4 @@
+import { method } from "lodash";
 import service from ".";
 
 interface loginData{
@@ -13,6 +14,12 @@ export function login(data:loginData){
         data
     }
     )
+}
 
-
+export function getGoodList(){
+    return service({
+        url:"/goods",
+        method:"get",
+    
+    })
 }
