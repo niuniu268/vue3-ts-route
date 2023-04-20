@@ -7,9 +7,9 @@ export interface listInt{
 export interface selectDataInt{
     goodname:string,
     description:string,
-    page:number,
-    count:number,
-    pagesize:number
+    page:number, // page number
+    count:number, // total number page*pagesize
+    pagesize:number // the number of items on one page
 }
 
 export class initData {
