@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div>
         <div class="select-box">
             <el-form :inline="true" :model="selectData" class="demo-form-inline">
@@ -19,14 +19,19 @@
                 <el-table-column prop="goodname" label="Name" width="180" />
                 <el-table-column prop="description" label="Description" width="180" />
             </el-table>
-            <el-pagination @current-change = currentChange @size-change = sizeChange layout="prev, pager, next" :total="50" />
+            <el-pagination 
+                @current-change = currentChange 
+                @size-change = sizeChange 
+                layout="prev, pager, next" 
+                :total="selectData.count*2" 
+            />
         </div>
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive,toRefs, computed } from "vue";
+import { defineComponent, reactive,toRefs, computed,watch } from "vue";
 import { getGoodList } from "../request/api";
-import { initData } from "../type/goodlist";
+import { initData, listInt } from "../type/goodlist";
 export default defineComponent({
     setup() {
         const data = reactive( new initData())
@@ -49,9 +54,40 @@ export default defineComponent({
             })
 
         })
-        
+        const onSubmit = ()=>{
+            console.log(data.selectData.goodname);
+            console.log(data.selectData.description);
+            let arr:listInt[]=[]
+            if(data.selectData.goodname || data.selectData.description){
+                if(data.selectData.goodname){
+                    arr = data.list.filter((value)=>{
+                        return value.goodname.indexOf(data.selectData.goodname) != -1
+                        }
+                    )
+                }
+                if(data.selectData.description){
+                    arr = data.list.filter((value)=>{
+                        return value.goodname.indexOf(data.selectData.description) != -1
+                        }
+                    )
+                }
+            } else {
+                arr = data.list
+            }
+            data.selectData.count=arr.length
+            data.list=arr
+        };
+        watch([()=>data.selectData.goodname,()=>data.selectData.description],
+        ()=>{
+            if(data.selectData.goodname == "" && data.selectData.description == ""){
+                getGoodList().then((res)=> {
+                    data.list = res.data;
+                    data.selectData.count = res.data.length;
+                });
+            }
 
-        return{...toRefs(data),currentChange,sizeChange, dataList};
+        })
+        return{...toRefs(data),currentChange,sizeChange,dataList,onSubmit};
     },
 });
 </script>

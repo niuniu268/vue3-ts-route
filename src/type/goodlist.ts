@@ -19,7 +19,6 @@ export class initData {
         page:1,
         count:0,
         pagesize:3
-
     }
 
     list:listInt[]=[]
