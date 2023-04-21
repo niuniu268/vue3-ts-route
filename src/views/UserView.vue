@@ -26,7 +26,7 @@
                 <el-table-column prop="id" label="ID" width="180" />
                 <el-table-column prop="nickName" label="Nickname" width="180" />
                 <el-table-column prop="role" label="Role" width="180">
-                    <template #default="scope">
+                    <template #default="scope:any">
                         <el-button
                         v-for="item in scope.row.role"
                         size="small"
@@ -38,7 +38,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="role" label="Operate" width="180">
-                    <template #default="scope">
+                    <template #default="scope:any">
                         <el-button
                         size="small"
                         type="primary"
