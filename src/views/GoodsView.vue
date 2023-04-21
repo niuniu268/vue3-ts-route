@@ -55,8 +55,8 @@ export default defineComponent({
 
         })
         const onSubmit = ()=>{
-            console.log(data.selectData.goodname);
-            console.log(data.selectData.description);
+            // console.log(data.selectData.goodname);
+            // console.log(data.selectData.description);
             let arr:listInt[]=[]
             if(data.selectData.goodname || data.selectData.description){
                 if(data.selectData.goodname){

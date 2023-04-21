@@ -16,7 +16,7 @@ interface selectDataInt{
 
 interface roleListInt{
     authority:number[],
-    roleId:string,
+    roleId:number,
     roleName:string
 }
 
