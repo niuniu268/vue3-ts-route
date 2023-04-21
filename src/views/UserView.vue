@@ -37,7 +37,49 @@
                         </el-button>
                     </template>
                 </el-table-column>
+                <el-table-column prop="role" label="Operate" width="180">
+                    <template #default="scope">
+                        <el-button
+                        size="small"
+                        type="primary"
+                        link
+                        @click="changeUser(scope.row)"
+                        >
+                        Edit
+                        </el-button>
+                    </template>
+                </el-table-column>
             </el-table>
+        </div>
+        <div>
+            <el-dialog
+                v-model="isShow"
+                title="Edit information"
+            >
+                <span>Edit this information</span>
+                <el-form :model="active">
+                    <el-form-item>
+                        <el-input v-model="active.nickName" />
+                    </el-form-item>
+                    <el-form-item>
+                        <el-select multiple v-model="active.role" placeholder="please select">
+                            <el-option
+                            v-for="item in rolelist"
+                            :key="item.roleId"
+                            :label="item.roleName"
+                            :value="item.roleId"
+                            />
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="isShow = false" >Cancel</el-button>
+                    <el-button type="primary" @click="confirmInformation">Confirm</el-button>
+
+                </span>
+                </template>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -46,6 +88,7 @@ import { defineComponent,reactive,toRefs,onMounted,watch } from "vue";
 import {getUserList, getRoleList} from '../request/api';
 import { initData} from "../type/userlist";
 import { listUserInt } from "../type/userlist";
+
 export default defineComponent({
     setup() {
         onMounted(() => {
@@ -97,7 +140,33 @@ export default defineComponent({
                 getUser()
             }
         })
-        return{...toRefs(data),onSubmit,onMounted};
+
+        const changeUser = (row:listUserInt)=>{
+            console.log(row);
+            data.isShow=true
+            data.active ={
+                id: row.id,
+                nickName: row.nickName,
+                role: row.role.map((value)=>value.role),
+                userName:""
+            }
+        }
+
+        const confirmInformation = ()=>{
+            console.log(data.active) 
+            data.isShow=false
+            let target:any = data.list.find((value)=>value.id===data.active.id)
+            target.nickName = data.active.nickName
+            target.role.splice(0,target.role.length)
+            target.role = data.rolelist.filter((value)=>data.active.role.indexOf(value.roleId)!==-1)
+            console.log(target.role)
+            data.list.forEach((item, i)=>{
+                if(item.id==target.id){
+                    data.list[i]=target
+                }
+            })
+        }
+        return{...toRefs(data),onSubmit,onMounted,changeUser,confirmInformation};
     }
     
 })

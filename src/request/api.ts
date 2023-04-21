@@ -1,4 +1,4 @@
-import { method } from "lodash";
+// import { method } from "lodash";
 import service from ".";
 
 interface loginData{

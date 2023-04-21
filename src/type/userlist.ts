@@ -20,6 +20,13 @@ interface roleListInt{
     roleName:string
 }
 
+interface activeInt{
+    id:number,
+    userName:string,
+    nickName:string,
+    role:number[]
+}
+
 export class initData{
     selectData:selectDataInt={
         userName:"",
@@ -27,4 +34,11 @@ export class initData{
     }
     list:listUserInt[]=[]
     rolelist:roleListInt[]=[]
+    isShow=false
+    active:activeInt={
+        id:0,
+        userName:"",
+        nickName:"",
+        role:[]
+    }
 }
