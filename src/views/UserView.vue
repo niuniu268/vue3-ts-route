@@ -42,7 +42,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent,reactive,toRefs,onMounted } from "vue";
+import { defineComponent,reactive,toRefs,onMounted,watch } from "vue";
 import {getUserList, getRoleList} from '../request/api';
 import { initData} from "../type/userlist";
 import { listUserInt } from "../type/userlist";
@@ -89,8 +89,14 @@ export default defineComponent({
                 arr = data.list
             }
             data.list=arr;
-        }
-
+        };
+        watch([()=>data.selectData.userName,()=>data.selectData.role],
+        ()=>{
+            if(data.selectData.userName=="" && data.selectData.role==0){
+                getRole();
+                getUser()
+            }
+        })
         return{...toRefs(data),onSubmit,onMounted};
     }
     
