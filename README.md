@@ -1,9 +1,8 @@
 # vue3-ts-demo
 
-## Project setup
-```
-npm install
-```
+## based on Element-Plus UI
+## applied vue3.js webpack Babel axios
+
 
 ### Compiles and hot-reloads for development
 ```
@@ -29,3 +28,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 https://www.fastmock.site/#/project/6f5abc9dc3210060969979f42842856c
 
 ```
+
+### Created login page
+### Created goodslist page and userslist page by means of router
+### Craated form and dialog function
